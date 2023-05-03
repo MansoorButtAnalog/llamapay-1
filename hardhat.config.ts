@@ -23,52 +23,22 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
+let rpc_url = "https://polygon-mumbai.infura.io/v3/a750c8b4eb974497949fb46330e53169"
+let key = "09104bbc00c6f75fc5d9f849b15680a85712a40b75c47189abb9a5e0e610bd35"
+
+
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.8.4",
-    ...(process.env.DEPLOY === "true" &&
-    {
-      settings: {
-        optimizer: {
-          enabled: true,
-          runs: 1000,
-        },
-      },
-    }
-    )
   },
   namedAccounts: {
     deployer: 0,
   },
   networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
-    },
-    rinkeby: {
-      url: process.env.RINKEBY_RPC,
-      accounts: [process.env.PRIVATEKEY!]
-    },
-    kovan: {
-      url: "https://kovan.poa.network",
-      accounts: [process.env.PRIVATEKEY!],
-      gasMultiplier: 1.5,
-    },
-    hardhat: {
-      forking: {
-        url: process.env.ETH_RPC!
-      }
-    },
-  },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
-    //gasPrice: 100,
-    coinmarketcap: process.env.CMC_API_KEY
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN,
+    mumbai: {
+      url:rpc_url,
+      accounts:[key]
+    }
   },
 };
 
